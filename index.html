@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Thousand Dreams — Khun Tech</title>
+<meta name="description" content="A Thousand Dreams: 1,000 Myanmar dream cards, Thai Government Lottery results and ticket check. Myanmar · English · ไทย.">
+<meta property="og:title" content="A Thousand Dreams">
+<meta property="og:description" content="1,000 Myanmar dream cards · Thai Government Lottery results · Ticket check">
+<meta property="og:image" content="https://khunok.github.io/img/icon-256.png">
+<link rel="icon" type="image/png" href="img/favicon-48.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Noto+Sans+Myanmar:wght@400;600;700&family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14112B;
+    --bg2: #1F1A40;
+    --line: #3A3366;
+    --text: #F3EEFF;
+    --muted: #B6AED6;
+    --gold: #FFC15A;
+    --gold2: #F5A623;
+    --card: #FFF6E6;
+    --ink: #2A2350;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Outfit", "Noto Sans Myanmar", "Noto Sans Thai", system-ui, sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  /* soft starry sky, drawn in CSS (no images) */
+  .sky {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 18%, #fff8 50%, transparent 51%),
+      radial-gradient(1px 1px at 28% 72%, #fff6 50%, transparent 51%),
+      radial-gradient(2px 2px at 44% 12%, #ffd98a99 50%, transparent 51%),
+      radial-gradient(1px 1px at 63% 38%, #fff7 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 78% 82%, #fff6 50%, transparent 51%),
+      radial-gradient(2px 2px at 88% 22%, #ffd98a88 50%, transparent 51%),
+      radial-gradient(1px 1px at 8% 92%, #fff5 50%, transparent 51%),
+      radial-gradient(1px 1px at 52% 58%, #fff5 50%, transparent 51%),
+      radial-gradient(900px 600px at 50% -10%, #2b2460 0%, transparent 70%),
+      var(--bg);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sky { animation: twinkle 6s ease-in-out infinite alternate; }
+    @keyframes twinkle { from { opacity: .85; } to { opacity: 1; } }
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .2px; }
+  .brand img { width: 32px; height: 32px; border-radius: 9px; }
+  .brand span { white-space: nowrap; }
+  @media (max-width: 430px) { .brand span { display: none; } }
+  .langs { display: flex; gap: 4px; background: var(--bg2); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+  .langs button {
+    border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 14px;
+    padding: 4px 12px; border-radius: 999px; cursor: pointer;
+  }
+  .langs button[aria-pressed="true"] { background: var(--gold); color: var(--ink); font-weight: 700; }
+
+  .hero { text-align: center; padding: 40px 0 24px; }
+  .hero .icon {
+    width: 128px; height: 128px; border-radius: 30px;
+    box-shadow: 0 18px 50px #000a, 0 0 0 1px #ffffff14;
+  }
+  h1 { font-size: clamp(34px, 6vw, 54px); line-height: 1.15; margin: 22px 0 8px; font-weight: 700; }
+  .tag { color: var(--gold); font-weight: 700; font-size: clamp(17px, 2.6vw, 22px); margin: 0 0 6px; }
+  .sub { color: var(--muted); max-width: 620px; margin: 0 auto; font-size: 16px; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 26px;
+    background: var(--gold); color: var(--ink); text-decoration: none; font-weight: 700;
+    padding: 13px 26px; border-radius: 14px; font-size: 17px;
+    box-shadow: 0 10px 30px #f5a62340;
+  }
+  .cta:hover { background: #ffcf7a; }
+  .cta svg { width: 20px; height: 20px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 10px; }
+
+  .shots {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;
+    margin: 40px auto 10px; max-width: 900px;
+  }
+  .shots img {
+    width: 100%; height: auto; display: block; border-radius: 22px;
+    border: 1px solid var(--line); background: var(--bg2);
+  }
+  @media (max-width: 640px) {
+    .shots { grid-template-columns: repeat(3, 72%); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+    .shots img { scroll-snap-align: center; }
+  }
+
+  h2 { font-size: 24px; margin: 46px 0 16px; text-align: center; }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+  .feature {
+    background: var(--bg2); border: 1px solid var(--line); border-radius: 18px; padding: 18px;
+  }
+  .feature .ic {
+    width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+    background: #ffc15a1f; color: var(--gold); margin-bottom: 10px;
+  }
+  .feature .ic svg { width: 22px; height: 22px; }
+  .feature h3 { margin: 0 0 4px; font-size: 17px; }
+  .feature p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .note {
+    margin: 36px auto 0; max-width: 760px; text-align: center; color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--line); padding-top: 20px;
+  }
+  footer { padding: 26px 0 40px; text-align: center; color: var(--muted); font-size: 14px; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  footer .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-bottom: 10px; }
+
+  [data-l] { display: none; }
+  html[lang="my"] [data-l="my"], html[lang="en"] [data-l="en"], html[lang="th"] [data-l="th"] { display: revert; }
+  html[lang="my"] body { font-family: "Noto Sans Myanmar", "Outfit", system-ui, sans-serif; }
+  html[lang="th"] body { font-family: "Noto Sans Thai", "Outfit", system-ui, sans-serif; }
+  h1 { font-family: "Outfit", system-ui, sans-serif; }
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"></div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><img src="img/icon-256.png" alt=""><span>A Thousand Dreams</span></div>
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-set="my" aria-pressed="true">မြန်မာ</button>
+      <button type="button" data-set="en" aria-pressed="false">EN</button>
+      <button type="button" data-set="th" aria-pressed="false">ไทย</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <img class="icon" src="img/icon-256.png" width="128" height="128" alt="A Thousand Dreams app icon">
+    <h1>A Thousand Dreams</h1>
+    <p class="tag">
+      <span data-l="my">အိပ်မက်ကတ် ၁၀၀၀ နှင့် ထိုင်းအစိုးရထီ ရလဒ်</span>
+      <span data-l="en">1,000 dream cards &amp; Thai Government Lottery results</span>
+      <span data-l="th">ไพ่ความฝัน 1,000 ใบ และผลสลากกินแบ่งรัฐบาล</span>
+    </p>
+    <p class="sub">
+      <span data-l="my">မြန်မာ့ရိုးရာ အိပ်မက်ကတ် ၁၀၀၀ ကို ပုံ၊ နာမည်နှင့် အိပ်မက်ဂဏန်းဖြင့် လွယ်လွယ်ကူကူ ရှာဖွေကြည့်ရှုနိုင်ပါသည်။</span>
+      <span data-l="en">Browse 1,000 traditional Myanmar dream cards with pictures, names and dream numbers — quick and simple.</span>
+      <span data-l="th">ค้นหาไพ่ความฝันแบบดั้งเดิมของเมียนมา 1,000 ใบ พร้อมรูป ชื่อ และเลขความฝัน ได้ง่ายและรวดเร็ว</span>
+    </p>
+    <a class="cta" href="https://play.google.com/store/apps/details?id=com.khuntech.athousanddreams" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 2.7v18.6c0 .6.6 1 1.1.7l16-9.3a.8.8 0 0 0 0-1.4L5.1 2c-.5-.3-1.1.1-1.1.7z"/></svg>
+      <span data-l="my">Google Play မှာ ရယူရန်</span>
+      <span data-l="en">Get it on Google Play</span>
+      <span data-l="th">ดาวน์โหลดบน Google Play</span>
+    </a>
+    <div class="meta">
+      <span data-l="my">Android · အခမဲ့ · မြန်မာ၊ အင်္ဂလိပ်၊ ထိုင်း ဘာသာ</span>
+      <span data-l="en">Android · Free · Myanmar, English, Thai</span>
+      <span data-l="th">Android · ฟรี · ภาษาเมียนมา อังกฤษ ไทย</span>
+    </div>
+
+    <div class="shots">
+      <img src="img/01_home.webp" width="480" height="597" loading="lazy" alt="Dream cards home screen">
+      <img src="img/03_card.webp" width="480" height="597" loading="lazy" alt="Dream card detail">
+      <img src="img/04_lottery.webp" width="480" height="597" loading="lazy" alt="Lottery results screen">
+    </div>
+  </section>
+
+  <h2>
+    <span data-l="my">အဓိက လုပ်ဆောင်ချက်များ</span>
+    <span data-l="en">What you can do</span>
+    <span data-l="th">ฟีเจอร์หลัก</span>
+  </h2>
+  <section class="features">
+    <div class="feature">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+      <h3><span data-l="my">အိပ်မက်ကတ် ၁၀၀၀</span><span data-l="en">1,000 dream cards</span><span data-l="th">ไพ่ความฝัน 1,000 ใบ</span></h3>
+      <p><span data-l="my">အိပ်မက်အမည် (သို့) အိပ်မက်ဂဏန်းဖြင့် ရှာနိုင်ပါသည်။</span><span data-l="en">Search by dream name or dream number.</span><span data-l="th">ค้นหาด้วยชื่อความฝันหรือเลขความฝัน</span></p>
+    </div>
+    <div class="feature">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg></div>
+      <h3><span data-l="my">ထီပေါက်စဉ် ရလဒ်</span><span data-l="en">Lottery results</span><span data-l="th">ผลสลากกินแบ่งรัฐบาล</span></h3>
+      <p><span data-l="my">ထိုင်းအစိုးရထီ ရလဒ် အပြည့်အစုံနှင့် ယခင်ပွဲစဉ် မှတ်တမ်း။</span><span data-l="en">Full Thai Government Lottery results and past draws.</span><span data-l="th">ผลรางวัลครบทุกรางวัลและผลย้อนหลัง</span></p>
+    </div>
+    <div class="feature">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2M4 12h16"/></svg></div>
+      <h3><span data-l="my">ထီလက်မှတ် တိုက်စစ်ခြင်း</span><span data-l="en">Ticket check</span><span data-l="th">ตรวจสลาก</span></h3>
+      <p><span data-l="my">ဂဏန်း ၆ လုံး ရိုက်ထည့် (သို့) လက်မှတ်ကို scan ဖတ်ပြီး ရလဒ်နှင့် တိုက်စစ်နိုင်ပါသည်။</span><span data-l="en">Type the 6 digits or scan the ticket to compare it with the published results.</span><span data-l="th">พิมพ์เลข 6 หลักหรือสแกนสลากเพื่อเทียบกับผลที่ประกาศ</span></p>
+    </div>
+    <div class="feature">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></div>
+      <h3><span data-l="my">ကံဇာတာ</span><span data-l="en">Fortune</span><span data-l="th">ดวงชะตา</span></h3>
+      <p><span data-l="my">ကံဇာတာ အကျိုးပေးမှု တွက်နိုင်ပြီး ဘယ်လမှာ အကျိုးပေးမလဲ ကြည့်နိုင်ပါသည်။</span><span data-l="en">See whether your horoscope is favourable and find your month of good fortune.</span><span data-l="th">ดูว่าดวงชะตาของคุณให้คุณหรือไม่ และหาเดือนที่นำโชคให้คุณ</span></p>
+    </div>
+  </section>
+
+  <p class="note">
+    <span data-l="my">ထီရလဒ်များကို သတင်းအချက်အလက်အဖြစ်သာ ပြသပါသည်။ တရားဝင်ရလဒ်ကို ထိုင်းအစိုးရထီရုံး (GLO) တွင် အတည်ပြုပါ။ ဤ app သည် ထီလက်မှတ် မရောင်းပါ။</span>
+    <span data-l="en">Lottery results are shown for information only. Please verify official results with the Government Lottery Office of Thailand (GLO). This app does not sell tickets.</span>
+    <span data-l="th">แสดงผลรางวัลเพื่อเป็นข้อมูลเท่านั้น โปรดตรวจสอบผลอย่างเป็นทางการกับสำนักงานสลากกินแบ่งรัฐบาล แอปนี้ไม่ได้จำหน่ายสลาก</span>
+  </p>
+
+  <footer>
+    <div class="links">
+      <a href="https://play.google.com/store/apps/details?id=com.khuntech.athousanddreams" rel="noopener">Google Play</a>
+      <a href="https://khunok.github.io/Lottery-Result/privacy.html">
+        <span data-l="my">ကိုယ်ရေးအချက်အလက် မူဝါဒ</span><span data-l="en">Privacy Policy</span><span data-l="th">นโยบายความเป็นส่วนตัว</span>
+      </a>
+      <a href="mailto:khuneversmile@gmail.com">khuneversmile@gmail.com</a>
+    </div>
+    <div>© 2026 Khun Tech</div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll('.langs button');
+    function set(lang) {
+      root.setAttribute('lang', lang);
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.set === lang)); });
+      try { localStorage.setItem('atd-lang', lang); } catch (e) {}
+    }
+    var saved = null;
+    try { saved = localStorage.getItem('atd-lang'); } catch (e) {}
+    var nav = (navigator.language || '').toLowerCase();
+    set(saved || (nav.indexOf('th') === 0 ? 'th' : nav.indexOf('my') === 0 ? 'my' : nav.indexOf('en') === 0 ? 'en' : 'my'));
+    buttons.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.set); }); });
+  })();
+</script>
+</body>
+</html>

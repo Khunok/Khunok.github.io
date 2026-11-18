@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MyaThai Calendar — မြထိုင်း ပြက္ခဒိန် · Khun Tech</title>
+<meta name="description" content="Myanmar & Thai dual calendar, holidays, auspicious days, appointment reminders, weather and THB–MMK rates – made for Myanmar people in Thailand.">
+<meta property="og:title" content="MyaThai Calendar — မြထိုင်း ပြက္ခဒိန်">
+<meta property="og:description" content="Myanmar & Thai calendar, holidays, auspicious days, weather and THB–MMK rates in one app.">
+<meta property="og:image" content="https://khunok.github.io/myathai/img/og.jpg">
+<meta property="og:url" content="https://khunok.github.io/myathai/">
+<meta name="theme-color" content="#0F6B57">
+<link rel="icon" href="img/favicon-48.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Noto+Sans+Myanmar:wght@400;600;700&family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg1:#22B08A; --bg2:#0A4A40; --ink:#16302A; --muted:#5B6B67;
+    --gold:#FFE38F; --red:#E5484D; --paper:#F4F8F6; --card:#fff; --line:#E1ECE7;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; color:var(--ink); background:var(--paper); line-height:1.7;
+         font-family:"Outfit","Noto Sans Myanmar","Noto Sans Thai",system-ui,sans-serif; }
+  body[data-lang="my"] { font-family:"Noto Sans Myanmar","Outfit",system-ui,sans-serif; }
+  body[data-lang="th"] { font-family:"Noto Sans Thai","Outfit",system-ui,sans-serif; }
+  [data-l] { display:none; }
+  body[data-lang="my"] [data-l="my"], body[data-lang="en"] [data-l="en"], body[data-lang="th"] [data-l="th"] { display:revert; }
+  a { color:inherit; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
+
+  /* top bar */
+  .top { position:sticky; top:0; z-index:5; backdrop-filter:blur(10px);
+         background:rgba(10,74,64,.86); color:#fff; }
+  .top .wrap { display:flex; align-items:center; gap:12px; height:60px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; text-decoration:none; }
+  .brand img { width:34px; height:34px; border-radius:9px; }
+  .langs { margin-left:auto; display:flex; gap:6px; }
+  .langs button { border:1px solid rgba(255,255,255,.35); background:transparent; color:#fff;
+                  border-radius:999px; padding:5px 12px; font:inherit; font-size:.9rem; cursor:pointer; }
+  .langs button.on { background:#fff; color:var(--bg2); border-color:#fff; font-weight:700; }
+
+  /* hero */
+  .hero { background:linear-gradient(135deg,var(--bg1),var(--bg2)); color:#fff; overflow:hidden; position:relative; }
+  .hero::before { content:""; position:absolute; width:520px; height:520px; border-radius:50%;
+                  background:rgba(255,255,255,.06); right:-160px; top:-200px; }
+  .hero .wrap { display:grid; grid-template-columns:1.1fr .9fr; gap:30px; align-items:center; padding-top:56px; padding-bottom:0; position:relative; }
+  .hero .icon { width:96px; height:96px; border-radius:24px; box-shadow:0 14px 30px rgba(0,0,0,.3); }
+  .hero h1 { font-size:clamp(2rem,5vw,3.1rem); line-height:1.35; margin:18px 0 4px; }
+  .hero .en-name { font-family:"Outfit",sans-serif; font-weight:600; opacity:.9; font-size:1.25rem; }
+  .hero p.lead { font-size:1.12rem; opacity:.93; max-width:520px; margin:14px 0 24px; }
+  .play { display:inline-flex; align-items:center; gap:12px; background:#000; color:#fff; text-decoration:none;
+          border-radius:14px; padding:10px 20px 10px 16px; border:1px solid rgba(255,255,255,.25); }
+  .play svg { width:28px; height:28px; }
+  .play small { display:block; font-size:.72rem; opacity:.8; line-height:1.2; }
+  .play b { display:block; font-size:1.15rem; line-height:1.3; }
+  .play.soon { cursor:default; opacity:.92; }
+  .meta { margin-top:14px; font-size:.92rem; opacity:.85; }
+  .hero .phone { align-self:end; justify-self:center; width:min(320px,80vw); border-radius:34px 34px 0 0;
+                 border:10px solid #111; border-bottom:none; overflow:hidden; box-shadow:0 -10px 40px rgba(0,0,0,.35); }
+  .hero .phone img { display:block; width:100%; height:560px; object-fit:cover; object-position:top; }
+
+  /* sections */
+  section { padding:64px 0 10px; }
+  h2 { font-size:1.7rem; margin:0 0 8px; color:var(--bg2); }
+  .sub { color:var(--muted); margin:0 0 26px; }
+
+  .shots { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 4px 18px; }
+  .shots img { width:220px; flex:0 0 auto; border-radius:18px; scroll-snap-align:start;
+               box-shadow:0 10px 26px rgba(0,40,30,.18); }
+
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .card { background:var(--card); border-radius:20px; padding:22px; box-shadow:0 6px 22px rgba(0,40,30,.07); }
+  .card .em { font-size:1.9rem; }
+  .card h3 { margin:8px 0 6px; font-size:1.12rem; }
+  .card p { margin:0; color:var(--muted); font-size:.97rem; }
+
+  .pills { display:flex; flex-wrap:wrap; gap:12px; }
+  .pill { background:#fff; border:2px solid var(--line); border-radius:999px; padding:10px 18px; font-weight:600; }
+
+  .cta { margin:64px 0 0; background:linear-gradient(135deg,var(--bg1),var(--bg2)); color:#fff;
+         border-radius:28px; padding:36px 28px; text-align:center; }
+  .cta h2 { color:#fff; }
+  .cta img { width:72px; height:72px; border-radius:18px; }
+
+  footer { padding:40px 0 50px; color:var(--muted); font-size:.92rem; text-align:center; }
+  footer a { color:var(--bg2); }
+  footer .links { display:flex; justify-content:center; flex-wrap:wrap; gap:18px; margin-bottom:10px; }
+
+  @media (max-width:820px) {
+    .hero .wrap { grid-template-columns:1fr; text-align:center; }
+    .hero p.lead { margin-left:auto; margin-right:auto; }
+    .grid { grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:520px) { .grid { grid-template-columns:1fr; } .shots img { width:180px; } }
+</style>
+</head>
+<body data-lang="my">
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="img/icon-256.png" alt=""><span>MyaThai</span></a>
+    <div class="langs">
+      <button data-set="my" class="on">မြန်မာ</button>
+      <button data-set="en">EN</button>
+      <button data-set="th">ไทย</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <img class="icon" src="img/icon-256.png" alt="MyaThai Calendar icon">
+      <h1>
+        <span data-l="my">မြထိုင်း ပြက္ခဒိန်</span>
+        <span data-l="en">MyaThai Calendar</span>
+        <span data-l="th">ปฏิทินเมียนมา-ไทย</span>
+      </h1>
+      <div class="en-name"><span data-l="my">MyaThai Calendar</span><span data-l="th">MyaThai Calendar</span><span data-l="en">မြထိုင်း ပြက္ခဒိန်</span></div>
+      <p class="lead">
+        <span data-l="my">ထိုင်းနိုင်ငံရောက် မြန်မာများအတွက် နှစ်နိုင်ငံ ပြက္ခဒိန်၊ ရုံးပိတ်ရက်၊ ရက်ကောင်း၊ ရက်ချိန်း သတိပေးချက်၊ မိုးလေဝသ နှင့် ဘတ်-ကျပ် ငွေလဲနှုန်း – app တစ်ခုတည်းမှာ။</span>
+        <span data-l="en">A dual Myanmar–Thai calendar for Myanmar people in Thailand: holidays, auspicious days, appointment reminders, weather and THB–MMK rates – all in one app.</span>
+        <span data-l="th">ปฏิทินสองประเทศสำหรับชาวเมียนมาในไทย: วันหยุด ฤกษ์ดี การแจ้งเตือนนัดหมาย สภาพอากาศ และอัตราแลกเปลี่ยนบาท-จ๊าด ในแอปเดียว</span>
+      </p>
+      <!-- When the app is live on Google Play: change class="play soon" to class="play",
+           and set href to https://play.google.com/store/apps/details?id=com.myathai.calendar -->
+      <a class="play soon" id="play" href="#get">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M3.6 1.8 13.4 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1z"/><path fill="#FBBC04" d="m16.8 8.6-3.4 3.4 3.4 3.4 3.9-2.2c.9-.5.9-1.9 0-2.4z"/><path fill="#4285F4" d="M3.6 1.8c.3-.2.8-.2 1.2 0l12 6.8-3.4 3.4z"/><path fill="#EA4335" d="M13.4 12l3.4 3.4-12 6.8c-.4.2-.9.2-1.2 0z"/></svg>
+        <span>
+          <small><span data-l="my">မကြာမီ ရရှိနိုင်မည်</span><span data-l="en">Coming soon on</span><span data-l="th">เร็ว ๆ นี้บน</span></small>
+          <b>Google Play</b>
+        </span>
+      </a>
+      <div class="meta">
+        <span data-l="my">Android · အခမဲ့ · ကြော်ငြာမရှိ · မြန်မာ၊ ထိုင်း၊ အင်္ဂလိပ် ဘာသာ</span>
+        <span data-l="en">Android · Free · No ads · Myanmar, Thai, English</span>
+        <span data-l="th">Android · ฟรี · ไม่มีโฆษณา · ภาษาเมียนมา ไทย อังกฤษ</span>
+      </div>
+    </div>
+    <div class="phone"><img src="img/app-home.webp" alt="MyaThai Calendar home screen"></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <section>
+    <h2><span data-l="my">မျက်နှာပြင်များ</span><span data-l="en">Screenshots</span><span data-l="th">ภาพหน้าจอ</span></h2>
+    <p class="sub"><span data-l="my">ဘေးတိုက် ဆွဲကြည့်ပါ</span><span data-l="en">Swipe to see more</span><span data-l="th">เลื่อนเพื่อดูเพิ่มเติม</span></p>
+    <div class="shots">
+      <img src="img/shot1.webp" alt="Calendar" loading="lazy">
+      <img src="img/shot2.webp" alt="Holidays" loading="lazy">
+      <img src="img/shot3.webp" alt="Auspicious days" loading="lazy">
+      <img src="img/shot4.webp" alt="Reminders" loading="lazy">
+      <img src="img/shot5.webp" alt="Weather" loading="lazy">
+      <img src="img/shot6.webp" alt="Rain radar" loading="lazy">
+      <img src="img/shot7.webp" alt="Exchange rates" loading="lazy">
+      <img src="img/shot8.webp" alt="Currencies" loading="lazy">
+    </div>
+  </section>
+
+  <section>
+    <h2><span data-l="my">အဓိက လုပ်ဆောင်ချက်များ</span><span data-l="en">Main features</span><span data-l="th">ฟีเจอร์หลัก</span></h2>
+    <p class="sub"><span data-l="my">ပြက္ခဒိန် တွက်ချက်မှုများ အင်တာနက်မလိုဘဲ အလုပ်လုပ်ပါသည်။</span><span data-l="en">All calendar calculations work offline.</span><span data-l="th">การคำนวณปฏิทินทั้งหมดใช้งานได้แบบออฟไลน์</span></p>
+    <div class="grid">
+      <div class="card"><div class="em">📅</div>
+        <h3><span data-l="my">နှစ်နိုင်ငံ ပြက္ခဒိန်</span><span data-l="en">Dual calendar</span><span data-l="th">ปฏิทินสองประเทศ</span></h3>
+        <p><span data-l="my">ခရစ်၊ ထိုင်း ဗုဒ္ဓသက္ကရာဇ်၊ မြန်မာ ကောဇာ၊ လဆန်း/လဆုတ်၊ ဥပုသ်နေ့ နှင့် ထိုင်း วันพระ။</span><span data-l="en">Gregorian, Thai B.E. and Myanmar Era, moon phases, Sabbath and Wan Phra days.</span><span data-l="th">ค.ศ. พ.ศ. และศักราชเมียนมา ข้างขึ้นข้างแรม วันพระ และวันอุโบสถ</span></p></div>
+      <div class="card"><div class="em">🎉</div>
+        <h3><span data-l="my">ရုံးပိတ်ရက် နှင့် ပွဲတော်</span><span data-l="en">Holidays & festivals</span><span data-l="th">วันหยุดและเทศกาล</span></h3>
+        <p><span data-l="my">မြန်မာ၊ ထိုင်း ရုံးပိတ်ရက်များ အရောင်ခွဲပြပြီး သင်္ကြန်၊ လွိုင်ကရသုန်၊ သီတင်းကျွတ် ရက်ရေတွက်။</span><span data-l="en">Colour-coded Myanmar & Thai holidays with countdowns to Songkran, Loy Krathong and more.</span><span data-l="th">วันหยุดไทยและเมียนมาแยกสี พร้อมนับถอยหลังสงกรานต์ ลอยกระทง ฯลฯ</span></p></div>
+      <div class="card"><div class="em">✨</div>
+        <h3><span data-l="my">ရက်ကောင်း ရှာရန်</span><span data-l="en">Auspicious days</span><span data-l="th">หาฤกษ์ดี</span></h3>
+        <p><span data-l="my">ရက်ရာဇာ၊ ပြဿဒါး၊ ဝယ်ကောင်း/ချေးကောင်း ရက်နှင့် မဟာဘုတ်ကို အလိုအလျောက် တွက်ပေး။</span><span data-l="en">Yatyaza, Pyathada, good days to buy or lend, and Mahabote – calculated for you.</span><span data-l="th">คำนวณวันดี วันเสีย วันซื้อของ/ให้ยืมเงิน และมหาโภตให้อัตโนมัติ</span></p></div>
+      <div class="card"><div class="em">🗓️</div>
+        <h3><span data-l="my">ရက်ချိန်း သတိပေးချက်</span><span data-l="en">Reminders</span><span data-l="th">การแจ้งเตือน</span></h3>
+        <p><span data-l="my">ဆရာဝန်၊ အစည်းအဝေး၊ ခရီး နှင့် ၉၀ ရက် (TM.47)၊ ဗီဇာ၊ Work Permit၊ Passport သက်တမ်း။</span><span data-l="en">Doctor visits, meetings, trips, plus 90-day report (TM.47), visa, work permit and passport expiry.</span><span data-l="th">นัดหมอ ประชุม เดินทาง และรายงานตัว 90 วัน วีซ่า ใบอนุญาตทำงาน พาสปอร์ต</span></p></div>
+      <div class="card"><div class="em">🌧️</div>
+        <h3><span data-l="my">မိုးလေဝသ နှင့် PM2.5</span><span data-l="en">Weather & PM2.5</span><span data-l="th">อากาศและ PM2.5</span></h3>
+        <p><span data-l="my">Live မိုးလေဝသ၊ ၇ ရက် ခန့်မှန်းချက်၊ မိုးရေဒါ မြေပုံ၊ PM2.5 နှင့် ငလျင် သတင်း။</span><span data-l="en">Live weather, 7-day forecast, rain radar map, PM2.5 and earthquake reports.</span><span data-l="th">สภาพอากาศสด พยากรณ์ 7 วัน เรดาร์ฝน PM2.5 และแผ่นดินไหว</span></p></div>
+      <div class="card"><div class="em">💱</div>
+        <h3><span data-l="my">ငွေလဲနှုန်း နှင့် ရွှေဈေး</span><span data-l="en">Rates & gold</span><span data-l="th">อัตราแลกเปลี่ยนและทอง</span></h3>
+        <p><span data-l="my">ဘတ် ⇄ ကျပ်၊ ဒေါ်လာ အပါအဝင် ငွေကြေး ၁၂ မျိုး၊ ထိုင်း/မြန်မာ ရွှေဈေး၊ SOS အရေးပေါ်ဖုန်း။</span><span data-l="en">THB ⇄ MMK, USD and 11 more currencies, gold prices and one-tap SOS numbers.</span><span data-l="th">บาท ⇄ จ๊าด ดอลลาร์และสกุลเงินอื่น ราคาทอง และเบอร์ฉุกเฉิน</span></p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span data-l="my">ယုံကြည်စိတ်ချစွာ သုံးပါ</span><span data-l="en">Simple and private</span><span data-l="th">ใช้ง่ายและปลอดภัย</span></h2>
+    <div class="pills">
+      <span class="pill"><span data-l="my">🔒 အကောင့် မလို</span><span data-l="en">🔒 No account</span><span data-l="th">🔒 ไม่ต้องสมัคร</span></span>
+      <span class="pill"><span data-l="my">📵 ကြော်ငြာ မရှိ</span><span data-l="en">📵 No ads</span><span data-l="th">📵 ไม่มีโฆษณา</span></span>
+      <span class="pill"><span data-l="my">📴 Offline သုံးနိုင်</span><span data-l="en">📴 Works offline</span><span data-l="th">📴 ใช้ออฟไลน์ได้</span></span>
+      <span class="pill"><span data-l="my">🔠 စာလုံးကြီး၊ ခလုတ်ကြီး</span><span data-l="en">🔠 Large text & buttons</span><span data-l="th">🔠 ตัวอักษรใหญ่</span></span>
+      <span class="pill"><span data-l="my">🌙 Dark mode</span><span data-l="en">🌙 Dark mode</span><span data-l="th">🌙 โหมดมืด</span></span>
+    </div>
+  </section>
+
+  <div class="cta" id="get">
+    <img src="img/icon-256.png" alt="">
+    <h2><span data-l="my">မကြာမီ Google Play တွင်</span><span data-l="en">Coming soon to Google Play</span><span data-l="th">เร็ว ๆ นี้บน Google Play</span></h2>
+    <p><span data-l="my">Play Store တွင် "MyaThai" ဟု ရှာပါ။</span><span data-l="en">Search "MyaThai" on the Play Store.</span><span data-l="th">ค้นหา "MyaThai" บน Play Store</span></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="privacy.html"><span data-l="my">ကိုယ်ရေးအချက်အလက် မူဝါဒ</span><span data-l="en">Privacy policy</span><span data-l="th">นโยบายความเป็นส่วนตัว</span></a>
+      <a href="mailto:khuneversmile@gmail.com"><span data-l="my">ဆက်သွယ်ရန်</span><span data-l="en">Contact</span><span data-l="th">ติดต่อ</span></a>
+      <a href="../"><span data-l="my">အခြား app: A Thousand Dreams</span><span data-l="en">Also by us: A Thousand Dreams</span><span data-l="th">แอปอื่น: A Thousand Dreams</span></a>
+    </div>
+    © 2026 Khun Tech · MyaThai Calendar
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('myathai-lang'); } catch (e) {}
+    var nav = (navigator.language || '').toLowerCase();
+    var lang = saved || (nav.indexOf('th') === 0 ? 'th' : nav.indexOf('my') === 0 ? 'my' : 'my');
+    function set(l) {
+      document.body.dataset.lang = l;
+      document.documentElement.lang = l;
+      document.querySelectorAll('.langs button').forEach(function (b) { b.classList.toggle('on', b.dataset.set === l); });
+      try { localStorage.setItem('myathai-lang', l); } catch (e) {}
+    }
+    document.querySelectorAll('.langs button').forEach(function (b) { b.onclick = function () { set(b.dataset.set); }; });
+    set(lang);
+  })();
+</script>
+</body>
+</html>

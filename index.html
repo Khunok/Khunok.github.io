@@ -124,6 +124,16 @@
   footer a:hover { text-decoration: underline; }
   footer .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-bottom: 10px; }
 
+  .more { display:flex; align-items:center; gap:16px; text-decoration:none; color:inherit;
+          background:linear-gradient(135deg,#22B08A,#0A4A40); border-radius:22px; padding:18px 20px;
+          box-shadow:0 10px 30px rgba(0,0,0,.25); transition:transform .15s; }
+  .more:hover { transform:translateY(-2px); }
+  .more img { width:72px; height:72px; border-radius:18px; flex:0 0 auto; box-shadow:0 6px 16px rgba(0,0,0,.25); }
+  .more h3 { margin:0 0 2px; font-size:18px; color:#fff; }
+  .more p { margin:0; font-size:14.5px; color:rgba(255,255,255,.88); }
+  .more .go { margin-left:auto; font-size:26px; color:#FFE38F; }
+  .more .badge { display:inline-block; margin-top:6px; font-size:12px; font-weight:700; color:#0A4A40;
+                 background:#FFE38F; border-radius:999px; padding:2px 10px; }
   [data-l] { display: none; }
   html[lang="my"] [data-l="my"], html[lang="en"] [data-l="en"], html[lang="th"] [data-l="th"] { display: revert; }
   html[lang="my"] body { font-family: "Noto Sans Myanmar", "Outfit", system-ui, sans-serif; }
@@ -210,12 +220,32 @@
     <span data-l="th">แสดงผลรางวัลเพื่อเป็นข้อมูลเท่านั้น โปรดตรวจสอบผลอย่างเป็นทางการกับสำนักงานสลากกินแบ่งรัฐบาล แอปนี้ไม่ได้จำหน่ายสลาก</span>
   </p>
 
+  <h2>
+    <span data-l="my">Khun Tech ၏ အခြား app</span>
+    <span data-l="en">More apps from Khun Tech</span>
+    <span data-l="th">แอปอื่นจาก Khun Tech</span>
+  </h2>
+  <a class="more" href="myathai/">
+    <img src="myathai/img/icon-256.png" alt="MyaThai Calendar icon" width="72" height="72">
+    <div>
+      <h3><span data-l="my">မြထိုင်း ပြက္ခဒိန်</span><span data-l="en">MyaThai Calendar</span><span data-l="th">ปฏิทินเมียนมา-ไทย</span></h3>
+      <p>
+        <span data-l="my">မြန်မာ-ထိုင်း ပြက္ခဒိန်၊ ရုံးပိတ်ရက်၊ ရက်ကောင်း၊ မိုးလေဝသ နှင့် ဘတ်-ကျပ် ငွေလဲနှုန်း</span>
+        <span data-l="en">Myanmar–Thai calendar, holidays, auspicious days, weather and THB–MMK rates</span>
+        <span data-l="th">ปฏิทินเมียนมา-ไทย วันหยุด ฤกษ์ดี สภาพอากาศ และอัตราแลกเปลี่ยนบาท-จ๊าด</span>
+      </p>
+      <span class="badge"><span data-l="my">မကြာမီ</span><span data-l="en">Coming soon</span><span data-l="th">เร็ว ๆ นี้</span></span>
+    </div>
+    <span class="go" aria-hidden="true">→</span>
+  </a>
+
   <footer>
     <div class="links">
       <a href="https://play.google.com/store/apps/details?id=com.khuntech.athousanddreams" rel="noopener">Google Play</a>
       <a href="https://khunok.github.io/Lottery-Result/privacy.html">
         <span data-l="my">ကိုယ်ရေးအချက်အလက် မူဝါဒ</span><span data-l="en">Privacy Policy</span><span data-l="th">นโยบายความเป็นส่วนตัว</span>
       </a>
+      <a href="myathai/">MyaThai Calendar</a>
       <a href="mailto:khuneversmile@gmail.com">khuneversmile@gmail.com</a>
     </div>
     <div>© 2026 Khun Tech</div>
